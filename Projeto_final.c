@@ -105,6 +105,12 @@ void menu_usuario(){
 }
 //
 
+// Função cadastro do usuário //
+Usuario cadastrar_usuario(Usuario user){
+    scanf("%[^\n]", user.name);
+    return user;
+}
+//
 int main(){
     menu_usuario();
 }
