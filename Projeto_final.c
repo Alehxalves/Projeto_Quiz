@@ -19,7 +19,7 @@ Cadastro de Perguntas juntamente com as resposta.
 Excluir pergunta.
 
 */
-
+// Estruturas//
 typedef struct{
 
     char name[51];
@@ -32,7 +32,9 @@ typedef struct{
     char alternativas[51];
     int resposta;
 }Pergunta;
+//
 
+// Função para criar perguntas //
 Pergunta criar_perguntas(Pergunta * pergunta){
     printf("Escreva o enunciado da pergunta: \n");
     scanf("%[^\n]", pergunta->enunciado);
@@ -41,7 +43,9 @@ Pergunta criar_perguntas(Pergunta * pergunta){
     printf("Digite qual a alternativa correta: \n");
     scanf("%d", pergunta->resposta)
 }
+//
 
+// Função Menu do administrador //
 void menu_admin(){
     bool parar = false;
 
@@ -66,7 +70,9 @@ void menu_admin(){
         } 
     }
 }
+//
 
+// Função do Menu inicial/Menu Usuário //
 void menu_usuario(){
 
     bool parar = false;
@@ -97,6 +103,7 @@ void menu_usuario(){
         parar = true;
     }
 }
+//
 
 int main(){
     menu_usuario();
