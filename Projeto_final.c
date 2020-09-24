@@ -1,19 +1,15 @@
 /* Projeto Final De FUP-2020 
     Sistema de Quiz
-
 Deve Conter:
-
 Menu de Usuário.
 Cadastro de Usuário.
 Perguntas
 Resposta do usuário
 Informação de erro ou acerto da pergunta.
 Pontuação
-
 Menu Admin
 Cadastro de Perguntas juntamente com as resposta.
 Excluir pergunta.
-
 */
 
 #include <stdio.h>
@@ -35,7 +31,7 @@ typedef struct{
 
 typedef struct{
 
-    char enunciado[MAX_char;
+    char enunciado[MAX_char];
     char alternativas[MAX_char];
     char resposta;
 
@@ -57,7 +53,6 @@ Pergunta criar_perguntas(Pergunta * pergunta){
     scanf("%[^\n]", pergunta.alternativa);
     printf("Digite qual a alternativa correta: \n");
     scanf("%d", &pergunta.resposta)
-
     return * pergunta;
 }
 */
@@ -122,17 +117,20 @@ void Quiz(){
         printf("\n");
         printf("Pergunta %d%c %s\n", i + 1, 41, perguntas[i].enunciado);
         printf("\n");
+
         printf("%s\n", perguntas[i].alternativas);
+
         printf("%c%c%c%c%c%c%c%c%c\n", 205, 205, 205, 205, 205, 205, 205, 205, 187);
         printf("Letra:");
         scanf(" %c", &resp);
         printf("%c%c%c%c%c%c%c%c%c\n",205, 205, 205, 205, 205, 205, 205, 205, 188);
+
         if(resp == perguntas[i].resposta){
-            printf("%c%c%c Voce acertou!!\n\n", 175, 175, 175);
+            printf("%c%c%c Voce acertou!!\n", 175, 175, 175);
             usuario.pontuacao +=5;
         }
         else{
-            printf("%c%c%c Voce errou :(\n\n", 175, 175, 175);
+            printf("%c%c%c Voce errou :(\n", 175, 175, 175);
         }
     }   
     printf("Voce completou o Quiz, veja sua pontuacao no menu.\n\n");
