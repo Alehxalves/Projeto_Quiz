@@ -20,22 +20,23 @@ Excluir pergunta.
 #include <string.h>
 #include <stdbool.h>
 
-#define MAX_char 256
+#define MAX_char 255
+#define MAX_nick 21
 #define MAX_perguntas 10
 
 
 ///////////////////// Estruturas//////////////
 typedef struct{
 
-    char name[21];
+    char name[MAX_nick];
     int pontuacao;
 
 }Usuario;
 
 typedef struct{
 
-    char enunciado[101];
-    char alternativas[101];
+    char enunciado[MAX_char;
+    char alternativas[MAX_char];
     char resposta;
 
 }Pergunta;
