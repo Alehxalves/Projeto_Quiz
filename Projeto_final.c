@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define MAX_char 255
 #define MAX_nick 21
@@ -25,12 +26,16 @@ typedef struct{
 }Pergunta;
 
 Pergunta perguntas[MAX_perguntas];
-
 Usuario usuario[MAX_users];
 /////////// FIM ////////////////
 
+//
+void menu_usuario();
+//
+
 ///FUNÇÃO ADICIONAR PERGUNTA////
 void adicionar_pergunta(){
+    system("cls");
 
     for(int i = 0; i < MAX_perguntas; i++){
 
@@ -72,6 +77,7 @@ void adicionar_pergunta(){
 
 //// FUNÇÃO REMOVER PERGUNTA ///
 void remover_pergunta(){
+    system("cls");
     int indice;
     for(int i = 0; i < MAX_perguntas; i++){
         if(strlen(perguntas[i].enunciado) > 1){
@@ -84,14 +90,20 @@ void remover_pergunta(){
 
     if(strlen(perguntas[indice - 1].enunciado) > 1){    
         strcpy(perguntas[indice - 1].enunciado, "0");
+        system("cls");
+    }
+    
+    else{ 
+        system("cls");
+        printf("Nao existe pergunta no indice %d\n", indice);
     }
 
-    else{ printf("Nao existe pergunta no indice %d\n", indice);}
 }
 /////////// FIM ////////////////
 
 //// FUNÇÃO DO MENU ADMIN //////
 void menu_admin(){
+    system("cls");
 
     bool parar = false;
 
@@ -111,12 +123,17 @@ void menu_admin(){
 
         switch(opcao){
             case 1:
+                system("cls");
+
                 adicionar_pergunta();
                 break;
             case 2:
+                system("cls");
+
                 remover_pergunta();
                 break;
             case 3:
+                system("cls");
                 parar = true;
                 break;
             default:
@@ -137,15 +154,31 @@ void perguntas_prontas(){
     strcpy(perguntas[1].alternativas, "a) Platao\nb) Galileu Galilei\nc) Descartes\nd) Socrates\ne) Francis Bacon");
     perguntas[1].resposta = 'c';
 
+    strcpy(perguntas[2].enunciado, "Normalmente, quantos litros de sangue uma pessoa tem? Em média, quantos são retirados numa doação de sangue?");
+    strcpy(perguntas[2].alternativas, "a) Tem entre 2 a 4 litros. São retirados 450 mililitros\nb) Tem entre 4 a 6 litros. São retirados 450 mililitros\nc) Tem 10 litros. São retirados 2 litros\nd) Tem 7 litros. São retirados 1,5 litros\ne) Tem 0,5 litros. São retirados 0,5 litros");
+    perguntas[2].resposta = 'b';
+
+    strcpy(perguntas[3].enunciado, "Quais o menor e o maior país do mundo?");
+    strcpy(perguntas[3].alternativas, "a) Vaticano e Rússia\nb) Nauru e China\nc) Mônaco e Canadá\nd) Malta e Estados Unidos\ne) São Marino e Índia");
+    perguntas[3].resposta = 'a';
+
+    strcpy(perguntas[4].enunciado, "Quantas casas decimais tem o número pi?");
+    strcpy(perguntas[4].alternativas, "a) Duas\nb) Centenas\nc) Infinitas\nd) Vinte\ne) Milhares");
+    perguntas[4].resposta = 'c';    
+
+    strcpy(perguntas[5].enunciado, "Qual o número mínimo de jogadores numa partida de futebol?");
+    strcpy(perguntas[5].alternativas, "a) 8\nb) 10\nc) 9\nd) 5\ne) 7");
+    perguntas[5].resposta = 'e';  
 }
 /////////// FIM ////////////////
 
 /////// FUNÇÃO DO QUIZ /////////
 void Quiz(int user){ 
+    system("cls");
 
     for(int i = 0; i < MAX_perguntas; i++){
 
-        if(strlen(perguntas[i].enunciado) > 1){
+        if(strlen(perguntas[i].enunciado) > 2){
             char resp;
 
             printf("\n");
@@ -153,35 +186,24 @@ void Quiz(int user){
             printf("%c%c%c%c%c%c%c%c%c QUIZ %c%c%c%c%c%c%c%c%c\n", 254, 254, 254, 254, 254, 254,
             254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
 
-            printf("Pergunta %d%c %s\n", i + 1, 41, perguntas[i].enunciado);
+            printf("Pergunta: %s\n", perguntas[i].enunciado);
             printf("\n");
 
             printf("%s\n", perguntas[i].alternativas);
 
-            printf("%c%c%c%c%c%c%c%c%c\n", 205, 205, 205, 205, 205, 205, 205, 205, 205);// Apenas caracteres especiais.
-
             printf("%cLetra: ", 175);
             scanf(" %c", &resp);
 
-            printf("%c%c%c%c%c%c%c%c%c\n",205, 205, 205, 205, 205, 205, 205, 205, 205);// Apenas caracteres especiais.
-
-            printf("%c%c%c%c%c%c%c%c%c QUIZ %c%c%c%c%c%c%c%c%c\n\n", 254, 254, 254, 254, 254, 254,
-            254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
-
+            system("cls");
             if(resp == perguntas[i].resposta){
-                printf("%c%c%c Voce acertou!!\n", 175, 175, 175);// Apenas caracteres especiais.
                 usuario[user].pontuacao +=5;
             }
-            else{
-                printf("%c%c%c Voce errou :(\n", 175, 175, 175);// Apenas caracteres especiais.
-            }
         }
+        system("cls");
     }
 
     printf("\n");   
     printf("Voce completou o Quiz, veja sua pontuacao no menu.\n\n");
-    
-    menu_usuario();
 
 }
 /////////// FIM ////////////////
@@ -261,6 +283,8 @@ void menu_usuario(){
         switch(opcao){
             int opc;
             case 1:
+                system("cls");
+
                 printf("========================\n");
 
                 printf("[1]Entrar\n[2]Cadastrar\n[3]Voltar\n");
@@ -269,20 +293,23 @@ void menu_usuario(){
                 scanf(" %d", &opc);
 
                 printf("========================\n");
-
                 switch(opc){
                     case 1:
+                        system("cls");
                         login();
                         break;
                     case 2: 
                         n_users++;
+                        system("cls");
                         cadastrar_usuario(n_users);
                         break;
                     case 3:
+                        system("cls");
                         break;
                 }
                 break;
             case 2:
+                system("cls");
                 printf("========== RANKING ==========\n");
                 int i, j;
                 Usuario aux;
@@ -294,16 +321,18 @@ void menu_usuario(){
                     usuario[j] = aux;
                 }
                 for(int k = 0; k < MAX_users; k++){
-                    if(strlen(usuario[k].name) > 0){ 
+                    if(strlen(usuario[k].name) > 0 && usuario[k].pontuacao > 0){ 
                         printf("%d Lugar: %s %c %d PTS!\n", k + 1, usuario[k].name, 206, usuario[k].pontuacao); 
                     }  
                 }
-                printf("===============================\n");
+                printf("=============================\n");
                 break;
             case 3:
+                system("cls");
                 parar = true;
                 break;
             case 2020: // OPÇÃO PARA ACESSAR O MENU DE ADMIN //
+                system("cls");
                 menu_admin();
                 break;
             default:
