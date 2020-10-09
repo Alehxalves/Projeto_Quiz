@@ -1,26 +1,3 @@
-/* Projeto Final De Fundamentos de Programação////
-    Professor: Roberto Cabral
-    
-                Sistema de Quiz
-
-Deve Conter:
-Menu de Usuário.
-Cadastro de Usuário.
-Perguntas
-Resposta do usuário
-Informação de erro ou acerto da pergunta.
-Pontuação
-
-Menu Admin
-Cadastro de Perguntas juntamente com as resposta.
-Excluir pergunta.
-*//////////////////////////////////////////////////
-
-//EQUIPE:
-//Alex Alves - Matrícula: 496022. 
-//Ana Beatriz - Matrícula: 499007.
-//Izael Nunes - Matrícula: 494271
-
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -29,15 +6,6 @@ Excluir pergunta.
 #define MAX_nick 21
 #define MAX_perguntas 10
 #define MAX_users 5
-
-////// VARIAVEIS GLOBAIS ////////
-
-int user = 0; // VAR PARA VERIFICAR QUANTOS USUARIOS NO SISTEMA.
-int indice_user = 0;// VERIFICAR OS INDICES DO VETOR USUARIO, E IDENTIFICAR O USER.
-
-int qt_perguntas = 2;// QUANTIDADE DE PERGUNTAS NO SISTEMA
-
-/////////// FIM ////////////////
 
 /////////// ESTRUTURAS /////////
 typedef struct{
@@ -56,53 +24,69 @@ typedef struct{
 
 }Pergunta;
 
-
 Pergunta perguntas[MAX_perguntas];
 
 Usuario usuario[MAX_users];
-
-/////////// FIM ////////////////
-
-//AINDA NÃO ESTÀ FUNCIONANDO////
-void remover_pergunta(){
-
-}
 /////////// FIM ////////////////
 
 ///FUNÇÃO ADICIONAR PERGUNTA////
 void adicionar_pergunta(){
 
-    printf("Escreva o enunciado da pergunta, utilize o caractere '*' para indicar uma quebra de linha: \n");
-    scanf(" %[^\n]", perguntas[qt_perguntas].enunciado);
+    for(int i = 0; i < MAX_perguntas; i++){
 
-    printf("Escreva 5 alternativas, de a) a e), utilize '*' no final da alternativa (a)* b)* c)* ...): \n" );
-    scanf(" %[^\n]", perguntas[qt_perguntas].alternativas);
+        if(strlen(perguntas[i].enunciado) == 0){
+            printf("Escreva o enunciado da pergunta, utilize o caractere '*' para indicar uma quebra de linha: \n");
+            scanf(" %[^\n]", perguntas[i].enunciado);
 
-    ///QUEBRAR LINHAS ///
-    for(int i = 0; i < strlen(perguntas[qt_perguntas].enunciado); i++){
+            printf("Escreva 5 alternativas, de a) a e), utilize '*' no final da alternativa (a)* b)* c)* ...): \n" );
+            scanf(" %[^\n]", perguntas[i].alternativas);
 
-        if(perguntas[qt_perguntas].enunciado[i] == '*'){
-            perguntas[qt_perguntas].enunciado[i] = '\n';
+            ///QUEBRAR LINHAS ///
+            for(int j = 0; j < strlen(perguntas[i].enunciado); j++){
+
+                if(perguntas[i].enunciado[j] == '*'){
+                    perguntas[i].enunciado[j] = '\n';
+                }
+            }
+
+            for(int j = 0; j < strlen(perguntas[i].alternativas); j++){
+
+                if(perguntas[i].alternativas[j] == '*'){
+                    perguntas[i].alternativas[j] = '\n';
+                }
+            }
+            /////////
+            printf("Digite qual a alternativa correta, entre a & e: ");
+
+            scanf(" %c", &perguntas[i].resposta);
+
+            if(perguntas[i].resposta >= 'A' && perguntas[i].resposta <= 'Z'){
+                int D = perguntas[i].resposta - 'A';
+                perguntas[i].resposta = D + 'a';
+            }
+            break;
+        }
+    }
+}
+/////////// FIM ////////////////
+
+//// FUNÇÃO REMOVER PERGUNTA ///
+void remover_pergunta(){
+    int indice;
+    for(int i = 0; i < MAX_perguntas; i++){
+        if(strlen(perguntas[i].enunciado) > 1){
+            printf("INDICE %d, pergunta: %s\n", i + 1, perguntas[i].enunciado);
         }
     }
 
-    for(int i = 0; i < strlen(perguntas[qt_perguntas].alternativas); i++){
+    printf("Remover pergunta do indice: ");
+    scanf(" %d", &indice);
 
-        if(perguntas[qt_perguntas].alternativas[i] == '*'){
-            perguntas[qt_perguntas].alternativas[i] = '\n';
-        }
-    }
-    /////////
-    printf("Digite qual a alternativa correta, entre A & E: ");
-
-    scanf(" %c", &perguntas[qt_perguntas].resposta);
-
-    if(perguntas[qt_perguntas].resposta >= 'A' && perguntas[qt_perguntas].resposta <= 'Z'){
-        int D = perguntas[qt_perguntas].resposta - 'A';
-        perguntas[qt_perguntas].resposta = D + 'a';
+    if(strlen(perguntas[indice - 1].enunciado) > 1){    
+        strcpy(perguntas[indice - 1].enunciado, "0");
     }
 
-    qt_perguntas++;
+    else{ printf("Nao existe pergunta no indice %d\n", indice);}
 }
 /////////// FIM ////////////////
 
@@ -113,18 +97,24 @@ void menu_admin(){
 
     while(parar == false){
 
-        int opcao = 0;
+        int opcao;
+
+        printf("%c%c%c%c%c%c%c%c%c ADMIN %c%c%c%c%c%c%c%c\n", 254, 254, 254, 254, 254, 254,
+        254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
 
         printf("[1]Adicionar perguntas\n[2]Remover perguntas\n[3]Sair\n");
         printf("Enter:");
         scanf(" %d", &opcao);
+
+        printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 254, 254, 254, 254, 254, 254,
+        254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
 
         switch(opcao){
             case 1:
                 adicionar_pergunta();
                 break;
             case 2:
-                //Remover perguntas
+                remover_pergunta();
                 break;
             case 3:
                 parar = true;
@@ -151,54 +141,57 @@ void perguntas_prontas(){
 /////////// FIM ////////////////
 
 /////// FUNÇÃO DO QUIZ /////////
-void Quiz(){
+void Quiz(int user){ 
 
-    perguntas_prontas();
-    
+    for(int i = 0; i < MAX_perguntas; i++){
 
-    for(int i = 0; i < qt_perguntas; i++){
-        char resp;
+        if(strlen(perguntas[i].enunciado) > 1){
+            char resp;
 
-        printf("\n");
+            printf("\n");
 
-        printf("%c%c%c%c%c%c%c%c%c QUIZ %c%c%c%c%c%c%c%c%c\n", 254, 254, 254, 254, 254, 254,
-        254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
+            printf("%c%c%c%c%c%c%c%c%c QUIZ %c%c%c%c%c%c%c%c%c\n", 254, 254, 254, 254, 254, 254,
+            254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
 
-        printf("Pergunta %d%c %s\n", i + 1, 41, perguntas[i].enunciado);
-        printf("\n");
+            printf("Pergunta %d%c %s\n", i + 1, 41, perguntas[i].enunciado);
+            printf("\n");
 
-        printf("%s\n", perguntas[i].alternativas);
+            printf("%s\n", perguntas[i].alternativas);
 
-        printf("%c%c%c%c%c%c%c%c%c\n", 205, 205, 205, 205, 205, 205, 205, 205, 205);// Apenas caracteres especiais.
+            printf("%c%c%c%c%c%c%c%c%c\n", 205, 205, 205, 205, 205, 205, 205, 205, 205);// Apenas caracteres especiais.
 
-        printf("%cLetra: ", 175);
-        scanf(" %c", &resp);
+            printf("%cLetra: ", 175);
+            scanf(" %c", &resp);
 
-        printf("%c%c%c%c%c%c%c%c%c\n",205, 205, 205, 205, 205, 205, 205, 205, 205);// Apenas caracteres especiais.
+            printf("%c%c%c%c%c%c%c%c%c\n",205, 205, 205, 205, 205, 205, 205, 205, 205);// Apenas caracteres especiais.
 
-        printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n\n", 254, 254, 254, 254, 254, 254,
-        254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
+            printf("%c%c%c%c%c%c%c%c%c QUIZ %c%c%c%c%c%c%c%c%c\n\n", 254, 254, 254, 254, 254, 254,
+            254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254, 254);
 
-        if(resp == perguntas[i].resposta){
-            printf("%c%c%c Voce acertou!!\n", 175, 175, 175);// Apenas caracteres especiais.
-            usuario[indice_user].pontuacao +=5;
-        }
-        else{
-            printf("%c%c%c Voce errou :(\n", 175, 175, 175);// Apenas caracteres especiais.
+            if(resp == perguntas[i].resposta){
+                printf("%c%c%c Voce acertou!!\n", 175, 175, 175);// Apenas caracteres especiais.
+                usuario[user].pontuacao +=5;
+            }
+            else{
+                printf("%c%c%c Voce errou :(\n", 175, 175, 175);// Apenas caracteres especiais.
+            }
         }
     }
+
     printf("\n");   
     printf("Voce completou o Quiz, veja sua pontuacao no menu.\n\n");
+    
+    menu_usuario();
+
 }
 /////////// FIM ////////////////
 
 //// FUNCAO DE BUSCAR USER /////
 void busca(char * login, int senha){
 
-    for(int i = 0; i < user; i++){
+    for(int i = 0; i < MAX_users; i++){
         if(senha == usuario[i].senha && strcmp(login, usuario[i].name) == 0){
-            indice_user = i;
-            Quiz();
+            Quiz(i);
         }
     }
     printf("Login ou senha errada!\n\n");
@@ -206,10 +199,9 @@ void busca(char * login, int senha){
 /////////// FIM ////////////////
 
 ///////// FUNCAO LOGIN /////////
-int login(){
-    char login_user[MAX_nick] = {0};
+void login(){
+    char login_user[MAX_nick];
     int login_senha;
-    login_senha = 0;
 
     printf("=========Login==========\n");
     printf("Login: ");
@@ -224,7 +216,8 @@ int login(){
 /////////// FIM ////////////////
 
 // Função cadastro do usuário //
-void cadastrar_usuario(){
+void cadastrar_usuario(int user){
+
     printf("========Cadastro=========\n");
     printf("Digite nome de usuario: ");
 
@@ -235,9 +228,8 @@ void cadastrar_usuario(){
 
     printf("=========================\n");
     usuario[user].pontuacao = 0;
-    user++;
-    indice_user = user - 1;
-    Quiz();
+
+    Quiz(user);
 }
 /////////// FIM ////////////////
 
@@ -248,7 +240,9 @@ void menu_usuario(){
 
     while(parar == false){
 
-        int opcao = 0;
+        int opcao;
+        int n_users;
+        if(n_users > MAX_users){ n_users = 0;}
         
         // Apenas caracteres especiais //
         printf("%c%c%c%c%c%c%c%c%c QUIZ %c%c%c%c%c%c%c%c%c\n", 254, 254, 254, 254, 254, 254,
@@ -281,16 +275,28 @@ void menu_usuario(){
                         login();
                         break;
                     case 2: 
-                        cadastrar_usuario();
+                        n_users++;
+                        cadastrar_usuario(n_users);
                         break;
                     case 3:
                         break;
                 }
                 break;
             case 2:
-                printf("========== PONTUACAO ==========\n");
-                for(int i = 0; i < user; i++){
-                        printf("Usuario: %s %c Pontos:%d\n", usuario[i].name, 206, usuario[i].pontuacao);    
+                printf("========== RANKING ==========\n");
+                int i, j;
+                Usuario aux;
+                for(i = 1; i < MAX_users; i++){
+                    aux = usuario[i];
+                    for(j = i; j > 0 && (aux.pontuacao > usuario[j - 1].pontuacao); j--){
+                        usuario[j] = usuario[j - 1];
+                    }
+                    usuario[j] = aux;
+                }
+                for(int k = 0; k < MAX_users; k++){
+                    if(strlen(usuario[k].name) > 0){ 
+                        printf("%d Lugar: %s %c %d PTS!\n", k + 1, usuario[k].name, 206, usuario[k].pontuacao); 
+                    }  
                 }
                 printf("===============================\n");
                 break;
@@ -309,5 +315,6 @@ void menu_usuario(){
 /////////// FIM ////////////////
 
 int main(){
+    perguntas_prontas();
     menu_usuario();
 }
